@@ -1,65 +1,70 @@
-﻿using System;
-
-namespace MissionMars;
+﻿namespace MissionMars;
 
 public class Rover
 {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public char Direction { get; set; }
+    private int _x;
+    private int _y;
+    private char _direction;
+    private readonly IMovement _movement;
 
     public Rover(int x, int y, char direction)
     {
-        X = x;
-        Y = y;
-        Direction = direction;
+        _x = x;
+        _y = y;
+        _direction = direction;
+        _movement = new RoverMovement(x, y, direction);
     }
 
     public void Move(string commands)
     {
         foreach (char command in commands)
         {
-            if (command == 'L')
+            //forward
+            if (command == 'f')
+            {
+                _movement.MoveForward();
+            }
+            //backward
+            else if (command == 'b')
+            {
+                _movement.MoveBackward();
+            }
+            //left
+            else if (command == 'l')
             {
                 TurnLeft();
             }
-            else if (command == 'R')
+            //right 
+            else if (command == 'r')
             {
                 TurnRight();
-            }
-            else if (command == 'M')
-            {
-                MoveForward();
             }
         }
     }
 
     private void TurnLeft()
     {
-        if (Direction == 'N') Direction = 'W';
-        else if (Direction == 'W') Direction = 'S';
-        else if (Direction == 'S') Direction = 'E';
-        else if (Direction == 'E') Direction = 'N';
+        if (_direction == 'N') _direction = 'W';
+        else if (_direction == 'W') _direction = 'S';
+        else if (_direction == 'S') _direction = 'E';
+        else if (_direction == 'E') _direction = 'N';
     }
 
     private void TurnRight()
     {
-        if (Direction == 'N') Direction = 'E';
-        else if (Direction == 'E') Direction = 'S';
-        else if (Direction == 'S') Direction = 'W';
-        else if (Direction == 'W') Direction = 'N';
+        if (_direction == 'N') _direction = 'E';
+        else if (_direction == 'E') _direction = 'S';
+        else if (_direction == 'S') _direction = 'W';
+        else if (_direction == 'W') _direction = 'N';
     }
 
-    private void MoveForward()
+    public (int x, int y) GetPosition()
     {
-        if (Direction == 'N') Y += 1;
-        else if (Direction == 'E') X += 1;
-        else if (Direction == 'S') Y -= 1;
-        else if (Direction == 'W') X -= 1;
+        return ((RoverMovement)_movement).GetPosition();
     }
 
-    public void PrintPosition()
+    public string PrintPosition()
     {
-        Console.WriteLine($"Rover Position: {X}, {Y}, {Direction}");
+        return $"Rover Position: {_x}, {_y}, {_direction}";
     }
 }

@@ -3,7 +3,7 @@
 using MissionMars;
 
 Rover rover = new Rover(0, 0, 'N');
-rover.Move("LMLMLMLMM");
-rover.PrintPosition();
+rover.Move("lblblblbb");
+Console.WriteLine(rover.PrintPosition());
 
 Console.ReadKey();
