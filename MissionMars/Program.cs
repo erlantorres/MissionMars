@@ -1,9 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using MissionMars;
+﻿using MissionMars;
 
 Rover rover = new Rover(0, 0, 'N');
 rover.Move("lblblblbb");
-Console.WriteLine(rover.PrintPosition());
+(int x, int y) = rover.GetPosition();
+char direction = rover.GetDirection();
+Console.WriteLine($"Rover Position: {x}, {y}, {direction}");
 
 Console.ReadKey();
