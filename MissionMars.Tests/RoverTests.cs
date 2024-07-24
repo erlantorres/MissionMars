@@ -1,14 +1,26 @@
+using MissionMars.Services;
+using MissionMars.Services.Interfaces;
+
 namespace MissionMars.Tests;
 
 public class RoverTests
 {
+    public Rover GetRover(int pointX, int pointY, char direction)
+    {
+        IDirection directionService = new RoverDirection(direction);
+        IMovement movementService = new RoverMovement(pointX, pointY, direction);
+
+
+        return new Rover(movementService, directionService);
+    }
+
     [Fact]
     public void GetDirectionAndGetPosition_ShouldBeInitial_ReturnsInitial()
     {
         //arrange
         (int, int) positionExpected = (0, 0);
         char directionExpected = 'N';
-        Rover rover = new Rover(0, 0, 'N');
+        Rover rover = GetRover(0, 0, 'N');
 
         //act
         (int, int) positionActual = rover.GetPosition();
@@ -24,7 +36,7 @@ public class RoverTests
     {
         //arrange
         (int, int) positionExpected = (0, 1);
-        Rover rover = new Rover(0, 0, 'N');
+        Rover rover = GetRover(0, 0, 'N');
 
         //act
         rover.Move("f");
@@ -39,7 +51,7 @@ public class RoverTests
     {
         //arrange
         (int, int) positionExpected = (0, 0);
-        Rover rover = new Rover(0, 1, 'N');
+        Rover rover = GetRover(0, 1, 'N');
 
         //act
         rover.Move("b");
@@ -54,7 +66,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'W';
-        Rover rover = new Rover(0, 0, 'N');
+        Rover rover = GetRover(0, 0, 'N');
 
         //act
         rover.Move("l");
@@ -69,7 +81,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'S';
-        Rover rover = new Rover(0, 0, 'W');
+        Rover rover = GetRover(0, 0, 'W');
 
         //act
         rover.Move("l");
@@ -84,7 +96,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'E';
-        Rover rover = new Rover(0, 0, 'S');
+        Rover rover = GetRover(0, 0, 'S');
 
         //act
         rover.Move("l");
@@ -99,7 +111,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'N';
-        Rover rover = new Rover(0, 0, 'E');
+        Rover rover = GetRover(0, 0, 'E');
 
         //act
         rover.Move("l");
@@ -114,7 +126,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'E';
-        Rover rover = new Rover(0, 0, 'N');
+        Rover rover = GetRover(0, 0, 'N');
 
         //act
         rover.Move("r");
@@ -129,7 +141,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'S';
-        Rover rover = new Rover(0, 0, 'E');
+        Rover rover = GetRover(0, 0, 'E');
 
         //act
         rover.Move("r");
@@ -144,7 +156,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'W';
-        Rover rover = new Rover(0, 0, 'S');
+        Rover rover = GetRover(0, 0, 'S');
 
         //act
         rover.Move("r");
@@ -159,7 +171,7 @@ public class RoverTests
     {
         //arrange
         char directionExpected = 'N';
-        Rover rover = new Rover(0, 0, 'W');
+        Rover rover = GetRover(0, 0, 'W');
 
         //act
         rover.Move("r");
@@ -175,7 +187,7 @@ public class RoverTests
         //arrange
         char directionExpected = 'N';
         (int, int) positionExpected = (0, -5);
-        Rover rover = new Rover(0, 0, 'N');
+        Rover rover = GetRover(0, 0, 'N');
 
         //act
         rover.Move("lblblblbb");

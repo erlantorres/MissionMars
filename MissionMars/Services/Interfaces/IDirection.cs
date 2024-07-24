@@ -1,4 +1,4 @@
-﻿namespace MissionMars;
+﻿namespace MissionMars.Services.Interfaces;
 
 public interface IDirection
 {

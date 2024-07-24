@@ -1,4 +1,6 @@
-﻿namespace MissionMars;
+﻿using MissionMars.Services.Interfaces;
+
+namespace MissionMars;
 
 public class Rover(IMovement movement, IDirection direction)
 {

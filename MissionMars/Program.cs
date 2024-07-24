@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MissionMars;
+using MissionMars.Services;
+using MissionMars.Services.Interfaces;
 
 var serviceProvider = new ServiceCollection()
     .AddSingleton<IMovement>(new RoverMovement(0, 0, 'N'))
@@ -8,6 +10,7 @@ var serviceProvider = new ServiceCollection()
 
 var movementService = serviceProvider.GetRequiredService<IMovement>();
 var directionService = serviceProvider.GetRequiredService<IDirection>();
+
 Rover rover = new Rover(movementService, directionService);
 rover.Move("lblblblbb");
 (int x, int y) = rover.GetPosition();
