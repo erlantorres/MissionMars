@@ -1,36 +1,25 @@
 ﻿namespace MissionMars;
 
-public class RoverMovement : IMovement
+public class RoverMovement(int pointX, int pointY, char direction) : IMovement
 {
-    private int _x;
-    private int _y;
-    private char _direction;
-
-    public RoverMovement(int x, int y, char direction)
-    {
-        _x = x;
-        _y = y;
-        _direction = direction;
-    }
-
     public void MoveBackward()
     {
-        if (_direction == 'N') _y -= 1;
-        else if (_direction == 'E') _x -= 1;
-        else if (_direction == 'S') _y += 1;
-        else if (_direction == 'W') _x += 1;
+        if (direction == 'N') pointY -= 1;
+        else if (direction == 'E') pointX -= 1;
+        else if (direction == 'S') pointY += 1;
+        else if (direction == 'W') pointX += 1;
     }
 
     public void MoveForward()
     {
-        if (_direction == 'N') _y += 1;
-        else if (_direction == 'E') _x += 1;
-        else if (_direction == 'S') _y -= 1;
-        else if (_direction == 'W') _x -= 1;
+        if (direction == 'N') pointY += 1;
+        else if (direction == 'E') pointX += 1;
+        else if (direction == 'S') pointY -= 1;
+        else if (direction == 'W') pointX -= 1;
     }
 
     public (int x, int y) GetPosition()
     {
-        return (_x, _y);
+        return (pointX, pointY);
     }
 }
