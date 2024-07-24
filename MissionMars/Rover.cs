@@ -5,9 +5,9 @@ public class Rover
     private readonly IMovement _movement;
     private readonly IDirection _direction;
 
-    public Rover(int x, int y, char direction)
+    public Rover(int pointX, int pointY, char direction)
     {
-        _movement = new RoverMovement(x, y, direction);
+        _movement = new RoverMovement(pointX, pointY, direction);
         _direction = new RoverDirection(direction);
     }
 
@@ -15,36 +15,33 @@ public class Rover
     {
         foreach (char command in commands)
         {
-            //forward
-            if (command == 'f')
+            switch (command)
             {
-                _movement.MoveForward();
-            }
-            //backward
-            else if (command == 'b')
-            {
-                _movement.MoveBackward();
-            }
-            //left
-            else if (command == 'l')
-            {
-                _direction.TurnLeft();
-            }
-            //right 
-            else if (command == 'r')
-            {
-                _direction.TurnRight();
+                case 'f': //forward
+                    _movement.MoveForward();
+                    break;
+                case 'b': //backward
+                    _movement.MoveBackward();
+                    break;
+                case 'l': //left
+                    _direction.TurnLeft();
+                    break;
+                case 'r': //right 
+                    _direction.TurnRight();
+                    break;
+                default:
+                    throw new ArgumentException("command not valid");
             }
         }
     }
 
     public (int x, int y) GetPosition()
     {
-        return ((RoverMovement)_movement).GetPosition();
+        return _movement.GetPosition();
     }
 
     public char GetDirection()
     {
-        return ((RoverDirection)_direction).GetDirection();
+        return _direction.GetDirection();
     }
 }
