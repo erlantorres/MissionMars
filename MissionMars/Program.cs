@@ -2,19 +2,15 @@
 using MissionMars;
 using MissionMars.Services;
 using MissionMars.Services.Interfaces;
+using MissionMars.Settings;
 
 var serviceProvider = new ServiceCollection()
-    .AddSingleton<IMovement>(new RoverMovement(0, 0, 'N'))
-    .AddSingleton<IDirection>(new RoverDirection('N'))
+    .AddSingleton(new InitialDirectionSettings('N'))
+    .AddSingleton(new InitialPositionSettings(0, 0))
+    .AddSingleton<IMovementService, MovementService>()
+    .AddSingleton<IDirectionService, DirectionService>()
+    .AddSingleton<IRoverService, RoverService>()
     .BuildServiceProvider();
 
-var movementService = serviceProvider.GetRequiredService<IMovement>();
-var directionService = serviceProvider.GetRequiredService<IDirection>();
-
-Rover rover = new Rover(movementService, directionService);
-rover.Move("lblblblbb");
-(int x, int y) = rover.GetPosition();
-char direction = rover.GetDirection();
-Console.WriteLine($"Rover Position: {x}, {y}, {directionService}");
-
-Console.ReadKey();
+var rover = new Rover(serviceProvider);
+rover.Start();

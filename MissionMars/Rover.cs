@@ -1,40 +1,31 @@
-﻿using MissionMars.Services.Interfaces;
+﻿
+using Microsoft.Extensions.DependencyInjection;
+using MissionMars.Services.Interfaces;
 
 namespace MissionMars;
 
-public class Rover(IMovement movement, IDirection direction)
+public class Rover(IServiceProvider serviceProvider)
 {
-    public void Move(string commands)
+    public void Start()
     {
-        foreach (char command in commands)
-        {
-            switch (command)
-            {
-                case 'f': //forward
-                    movement.MoveForward();
-                    break;
-                case 'b': //backward
-                    movement.MoveBackward();
-                    break;
-                case 'l': //left
-                    direction.TurnLeft();
-                    break;
-                case 'r': //right 
-                    direction.TurnRight();
-                    break;
-                default:
-                    throw new ArgumentException("command not valid");
-            }
-        }
+        var roverService = serviceProvider.GetRequiredService<IRoverService>();
+
+        var (roverPositionX, roverPositionY) = roverService.GetPosition();
+        var roverDirection = roverService.GetDirection();
+
+        WriteCoordinates(roverPositionX, roverPositionY, roverDirection);
+
+        roverService.Move("lblblblbb");
+        roverService.Move("lfffffflllrr");
+
+        (roverPositionX, roverPositionY) = roverService.GetPosition();
+        roverDirection = roverService.GetDirection();
+
+        WriteCoordinates(roverPositionX, roverPositionY, roverDirection);
     }
 
-    public (int x, int y) GetPosition()
+    private static void WriteCoordinates(int x, int y, char direction)
     {
-        return movement.GetPosition();
-    }
-
-    public char GetDirection()
-    {
-        return direction.GetDirection();
+        Console.WriteLine($"Rover actual position and direction: d: {direction}, x: {x}, y: {y}");
     }
 }
